@@ -13,6 +13,15 @@ pizzaJson.map((item, index)=> {     // mapeando 'pizzaJson'
     pizzaItem.querySelector('.pizza-item--price'). innerHTML = `R$ ${item.price.toFixed(2)}`;       // 'toFixed' fixa dois algarismos depois da virgula
     pizzaItem.querySelector('.pizza-item--name'). innerHTML = item.name;
     pizzaItem.querySelector('.pizza-item--desc'). innerHTML = item.description;
+    pizzaItem.querySelector('a'). addEventListener('click', (e)=> {        // seleçionando tag 'a' e adiçionando um 'evento' de click
+        e.preventDefault();     // 'preventDefault' vai previnir a ação padrão de 'click' da tag 'a'
+
+        c('.pizzaWindowArea'). style.opacity = 0;
+        c('.pizzaWindowArea'). style.display = 'flex';      // alterando 'display' do elemento de classe 'pizzaWindowArea' para torna-lo visivel na tela
+        setTimeout(()=> {
+            c('.pizzaWindowArea'). style.opacity = 1;
+        }, 200);       // função aguarda '200' mili segundos ou seja 1/5 de segundo para executar a opaçidade, mostrando elemento de classe 'pizzaWindowArea' na tela
+    });
 
     c('.pizza-area'). append(pizzaItem);       // 'append' adiçionando o elemento 'pizzaItem'
 });

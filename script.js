@@ -8,13 +8,19 @@ const cs = (el)=> {     // 'cs' retorna um array com itens encontrados
 
 pizzaJson.map((item, index)=> {     // mapeando 'pizzaJson'
     let pizzaItem = c('.models .pizza-item'). cloneNode(true);       // função 'cloneNode' clona elemento de classe 'pizza-item' do html
-
+ 
+    pizzaItem.setAttribute('data-key', index);       // setando atributo 'data-key'
     pizzaItem.querySelector('.pizza-item--img img'). src = item.img;     // seleçionando elemento de classe 'pizza-item--img' do html, 'src' inseri o caminho da imagem da pizza
     pizzaItem.querySelector('.pizza-item--price'). innerHTML = `R$ ${item.price.toFixed(2)}`;       // 'toFixed' fixa dois algarismos depois da virgula
     pizzaItem.querySelector('.pizza-item--name'). innerHTML = item.name;
     pizzaItem.querySelector('.pizza-item--desc'). innerHTML = item.description;
     pizzaItem.querySelector('a'). addEventListener('click', (e)=> {        // seleçionando tag 'a' e adiçionando um 'evento' de click
         e.preventDefault();     // 'preventDefault' vai previnir a ação padrão de 'click' da tag 'a'
+        let key = e.target.closest('.pizza-item'). getAttribute('data-key');
+
+        // c('.pizzaBig img').src = pizzaJson[key].img;
+        c('.pizzaInfo h1'). innerHTML = pizzaJson[key]. name;
+        c('.pizzaInfo--desc'). innerHTML = pizzaJson[key]. description;
 
         c('.pizzaWindowArea'). style.opacity = 0;
         c('.pizzaWindowArea'). style.display = 'flex';      // alterando 'display' do elemento de classe 'pizzaWindowArea' para torna-lo visivel na tela

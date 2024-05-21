@@ -50,6 +50,25 @@ function closeModal() {     // função 'closeModal' será um evento para 'fecha
         c('.pizzaWindowArea'). style.display = 'none';      // 'tirando' o modal da tela depois de '500', 1/5 segundos
     }, 500);
 }
+
 cs('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton'). forEach((item)=> {
     item.addEventListener('click', closeModal);     // colocando 'funçãocloseModal' como ação de click
+});
+
+c('.pizzaInfo--qtmenos'). addEventListener('click', ()=> {
+    if(modalQt > 1) {       // 'limite' espeçificado para executar ação de diminuir quantidade
+        modalQt--;      // 'decrementando' variável modalQt
+        c('.pizzaInfo--qt'). innerHTML = modalQt;       // linha serve para 'atualizar' a variável modalQt
+    }
+});
+
+c('.pizzaInfo--qtmais'). addEventListener('click', ()=> {
+    modalQt++;
+    c('.pizzaInfo--qt'). innerHTML = modalQt;
+});
+cs('.pizzaInfo--size'). forEach((size, sizeIndex)=> {       // seleçionando os tamanhos das pizzas
+    size.addEventListener('click', (e)=> {
+        c('.pizzaInfo--size.selected'). classList.remove('selected');       // seleçionando os itens seleçionados e 'removendo' a seleção
+        size.classList.add('selected');
+    });
 });

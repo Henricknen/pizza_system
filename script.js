@@ -80,11 +80,19 @@ cs('.pizzaInfo--size'). forEach((size, sizeIndex)=> {       // seleçionando os 
 c('.pizzaInfo--addButton'). addEventListener('click', ()=> {        // evento de 'click'
     let size = parseInt(c('.pizzaInfo--size.selected'). getAttribute('data-key'));      // pegando o 'tamanho' da pizza
 
-    cart.push({     // adiçionando um 'objeto' no carrinho
-        id:pizzaJson[modalKey]. id,     // id
-        size,       // tamanho
-        qt:modalQt      // quantidade
-    });
+    let identifier = pizzaJson[modalKey]. id + '@' + size;      // 'identier' é um identificador que junta o 'id' e o 'tamanho' da pizza
+
+    let key = cart.findIndex((item)=> item.identifier == identifier);       // 'findIndex' verifica se já existe o item com mesmo 'identifier' no carrinho
+
+    if(key > -1) {
+        cart[key]. qt += modalQt;       // se encontra item com mesmo 'identifier', apenas será aumentada a quantidade
+    } else {
+        cart.push({     // se não encontrar item de mesmo 'identifier' adiçiona um 'objeto' no carrinho
+            id:pizzaJson[modalKey]. id,     // id
+            size,       // tamanho
+            qt:modalQt      // quantidade
+        });
+    }
 
     closeModal();
 });

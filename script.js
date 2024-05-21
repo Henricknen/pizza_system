@@ -1,4 +1,7 @@
+let cart = [];      // variável 'cart' é um array representando o carrinho de compras
 let modalQt = 1;        // variável 
+let modalKey = 0;           // sempre que o modal for aberto essa variável será preenchida com a identificação da pizza seleçionada
+
 const c = (el)=> {      // constante 'c' reçebe um elemento 'el' e retorna 'document.querySelector', será ultilizada para evitar extensão excessiva de código
     return document.querySelector(el);
 }
@@ -18,7 +21,8 @@ pizzaJson.map((item, index)=> {     // mapeando 'pizzaJson'
     pizzaItem.querySelector('a'). addEventListener('click', (e)=> {        // seleçionando tag 'a' e adiçionando um 'evento' de click
         e.preventDefault();     // 'preventDefault' vai previnir a ação padrão de 'click' da tag 'a'
         let key = e.target.closest('.pizza-item'). getAttribute('data-key');
-        modalQt = 1;        // seta a quandida como 1
+        modalQt = 1;        // seta a quantidade como 1
+        modalKey = key;
 
         c('.pizzaBig img').src = pizzaJson[key].img;       // preenchendo o 'modal' com informações da pizza
         c('.pizzaInfo h1'). innerHTML = pizzaJson[key]. name;
@@ -71,4 +75,16 @@ cs('.pizzaInfo--size'). forEach((size, sizeIndex)=> {       // seleçionando os 
         c('.pizzaInfo--size.selected'). classList.remove('selected');       // seleçionando os itens seleçionados e 'removendo' a seleção
         size.classList.add('selected');
     });
+});
+
+c('.pizzaInfo--addButton'). addEventListener('click', ()=> {        // evento de 'click'
+    let size = parseInt(c('.pizzaInfo--size.selected'). getAttribute('data-key'));      // pegando o 'tamanho' da pizza
+
+    cart.push({     // adiçionando um 'objeto' no carrinho
+        id:pizzaJson[modalKey]. id,     // id
+        size,       // tamanho
+        qt:modalQt      // quantidade
+    });
+
+    closeModal();
 });

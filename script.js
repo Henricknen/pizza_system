@@ -102,9 +102,15 @@ function updateCart() {     // função de atualizar, tem a função de 'mostrar
     if(cart.length > 0) {
         c('aside'). classList. add('show');     // se estiver item no carrinho vai dar 'show', isso mostrará o carrinho
         c('.cart'). innerHTML = '';
+
+        let subtotal = 0;
+        let desconto = 0;
+        let total = 0;
         
         for(let i in cart) {     // 'for' responsável por adiçionar as informações da pizza
             let pizzaItem = pizzaJson.find((item)=> item.id == cart[i]. id);        // identificando a pizza
+            subtotal += pizzaItem.price * cart[i]. qt;      // calculando o subtotal, multiplicando a quantidade do carrinho de compras pelo preço
+
             let cartItem = c('.models .cart--item'). cloneNode(true);
 
             let pizzaSizeName;
@@ -125,9 +131,30 @@ function updateCart() {     // função de atualizar, tem a função de 'mostrar
             cartItem.querySelector('img'). src = pizzaItem.img;     // imagem da pizza
             cartItem.querySelector('.cart--item-nome'). innerHTML = pizzaName;      // nome concatenado com o tamanho
             cartItem.querySelector('.cart--item--qt'). innerHTML = cart[i].qt;
-
+            cartItem.querySelector('.cart--item-qtmenos'). addEventListener('click', ()=> {     // ação de click no botão de remover pizza
+                if(cart[i]. qt > 1) {       // condição para diminuir quantidades de pizza do carrinho de compras
+                    cart[i]. qt--;
+                } else {
+                    cart.splice(i, 1);      // se a for apenas uma pizza, ela será removida
+                }
+                updateCart();
+            });
+            
+            cartItem.querySelector('.cart--item-qtmais'). addEventListener('click', ()=> {
+                cart[i]. qt++;
+                updateCart();       // função atualizará o carrinho, toda vez que o botão for apertado
+            });
+            
             c('.cart'). append(cartItem);
         }
+
+        desconto = subtotal * 0.1;      // calculo do desconto
+        total = subtotal - desconto;        // calculo do total
+
+        c('.subtotal span:last-child'). innerHTML = `R$: ${subtotal.toFixed(2)}`;       // exibindo na tela os valores calculados
+        c('.desconto span:last-child'). innerHTML = `R$: ${desconto.toFixed(2)}`;
+        c('.total span:last-child'). innerHTML = `R$: ${total.toFixed(2)}`;
+
     } else {
         c('aside'). classList. remove('show');      // removendo show, o carrinho não aparecerá
     }

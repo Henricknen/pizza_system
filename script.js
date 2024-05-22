@@ -94,5 +94,19 @@ c('.pizzaInfo--addButton'). addEventListener('click', ()=> {        // evento de
         });
     }
 
+    updateCart();       // atualizando o carrinho de compras
     closeModal();
 });
+
+function updateCart() {     // função de atualizar, tem a função de 'mostrar' ou 'não mostrar' o carrinho de compras
+    if(cart.length > 0) {
+        c('aside'). classList. add('show');     // se estiver item no carrinho vai dar 'show', isso mostrará o carrinho
+        for(let i in cart) {
+            let pizzaItem = pizzaJson.find((item)=> item.id == cart[i]. id);        // identificando a pizza
+
+            console.log(pizzaItem);
+        }
+    } else {
+        c('aside'). classList. remove('show');      // removendo show, o carrinho não aparecerá
+    }
+}

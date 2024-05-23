@@ -98,7 +98,19 @@ c('.pizzaInfo--addButton'). addEventListener('click', ()=> {        // evento de
     closeModal();
 });
 
+c('.menu-openner'). addEventListener('click', ()=> {
+    if(cart.length > 0) {       // se tiver alguma pizza no carrinho de compras, o carrinho será aberto
+        c('aside'). style.left = '0';
+    }
+});
+
+c('.menu-closer'). addEventListener('click', ()=> {     // ação de fechamento de carrinho de compras 'mobile'
+        c('aside'). style.left = '100vw';
+});
+
 function updateCart() {     // função de atualizar, tem a função de 'mostrar' ou 'não mostrar' o carrinho de compras
+c('.menu-openner span'). innerHTML = cart.length;       // na 'div' de class 'menu-openner' inserindo a quantidade de itens do caarrinho de compras
+
     if(cart.length > 0) {
         c('aside'). classList. add('show');     // se estiver item no carrinho vai dar 'show', isso mostrará o carrinho
         c('.cart'). innerHTML = '';
@@ -157,5 +169,6 @@ function updateCart() {     // função de atualizar, tem a função de 'mostrar
 
     } else {
         c('aside'). classList. remove('show');      // removendo show, o carrinho não aparecerá
+        // c('aside').style.left = '100vw';
     }
 }
